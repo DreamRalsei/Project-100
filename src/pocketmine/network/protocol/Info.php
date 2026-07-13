@@ -35,7 +35,17 @@ interface Info{
 	 */
 	const CURRENT_PROTOCOL = 107;
 	const ACCEPTED_PROTOCOLS = [100,101,102,105,106,107]; // 1.0.0 -> 1.0.9 的Protocol
-	const MINECRAFT_VERSION = ["v1.0.5","v1.0.6","v1.0.7","v1.0.8","v1.0.9"];
+	/**
+	 * @doc
+	 * by XinYue Neko(NewmoomCat)
+	 * 1.0.0至1.0.2 -> 100
+	 * 1.0.3 -> 101
+	 * 1.0.4 -> 102
+	 * 1.0.5 -> 105
+	 * 1.0.6 -> 106
+	 * 1.0.7 至 1.0.9 -> 107
+	 */
+	const MINECRAFT_VERSION = ["1.0.0","1.0.3","v1.0.4","v1.0.5","v1.0.6","v1.0.7"];
 	const MINECRAFT_VERSION_NETWORK = "1.0.9";
 
 	const LOGIN_PACKET = 0x01;
