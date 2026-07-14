@@ -27,4 +27,8 @@ class EyeOfEnder extends Item{
 		parent::__construct(self::EYE_OF_ENDER, 0, $count, "Eye Of Ender");
 	}
 
+	public function getMaxStackSize() : int{
+		return 64;
+	}
+
 }
