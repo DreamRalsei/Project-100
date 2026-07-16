@@ -21,6 +21,9 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\Item;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
@@ -28,8 +31,8 @@ class Enderman extends Monster{
 	const NETWORK_ID = 38;
 
 	public $width = 0.3;
-	public $length = 0.9;
-	public $height = 1.8;
+	public $length = 0.4;
+	public $height = 2.2;
 
 	public $dropExp = [5, 5];
 	
@@ -54,4 +57,26 @@ class Enderman extends Monster{
 
 		parent::spawnTo($player);
 	}
+
+	/**
+	 * 掉落物
+	 * @return array
+	 */
+	public function getDrops()
+	{
+		$cause = $this->lastDamageCause;
+		$drops = [];
+		if ($cause instanceof EntityDamageByEntityEvent){
+			$damager = $cause->getDamager();
+			if ($damager instanceof Player){
+				$lootingL = $damager->getItemInHand()->getEnchantment(Enchantment::TYPE_WEAPON_LOOTING);
+				$drops = [Item::get(Item::ENDER_PEARL, 0, mt_rand(0, 2 + $lootingL))];
+
+				return $drops;
+			}
+		}
+
+		return [];
+	}
+
 }
