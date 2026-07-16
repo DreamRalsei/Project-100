@@ -298,6 +298,10 @@ class Block extends Position implements BlockIds, Metadatable{
 			self::$list[self::END_PORTAL] = EndPortal::class;
 			self::$list[self::END_GATEWAY] = EndGateway::class;
 
+			self::$list[self::PISTON] = Piston::class;
+			self::$list[self::STICKY_PISTON] = StickyPiston::class;
+			self::$list[self::PISTON_HEAD] = PistonHead::class;
+
 			foreach(self::$list as $id => $class){
 				if($class !== null){
 					/** @var Block $block */
