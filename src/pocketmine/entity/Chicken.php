@@ -22,6 +22,7 @@
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
@@ -62,21 +63,18 @@ class Chicken extends Animal{
 	}
 	
 	public function getDrops(){
-		$drops = [];
-		if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player) {
-			
-				switch (\mt_rand(0, 2)) {
-					case 0:
-						$drops[] = ItemItem::get(ItemItem::RAW_CHICKEN, 0, 1);
-						break;
-					case 1:
-						$drops[] = ItemItem::get(ItemItem::FEATHER, 0, 1);
-						break;
-					case 2:
-						$drops[] = ItemItem::get(ItemItem::FEATHER, 0, 2);
-						break;
-				}
+		$cause = $this->lastDamageCause;
+		if($cause instanceof EntityDamageByEntityEvent){
+			$damager = $cause->getDamager();
+			if($damager instanceof Player){
+				$lootingL = $damager->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
+				$drops = [ItemItem::get(ItemItem::RAW_CHICKEN, 0, mt_rand(1, 3 + $lootingL))];
+				$drops[] = ItemItem::get(ItemItem::FEATHER, 0, mt_rand(0, 2 + $lootingL));
+
+				return $drops;
+			}
 		}
-		return $drops;
+
+		return [];
 	}
 }
