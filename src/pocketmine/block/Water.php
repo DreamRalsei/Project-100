@@ -29,12 +29,16 @@ class Water extends Liquid{
 
 	protected $id = self::WATER;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName() : string{
 		return "Water";
+	}
+
+	public function getLightFilter() : int{
+		return 2;
 	}
 
 	public function onEntityCollide(Entity $entity){

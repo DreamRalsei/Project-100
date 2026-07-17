@@ -1132,13 +1132,27 @@ class Level implements ChunkManager, Metadatable{
 	 * @param int     $delay
 	 */
 	public function scheduleUpdate(Vector3 $pos, int $delay){
-		if(isset($this->updateQueueIndex[$index = Level::blockHash($pos->x, $pos->y, $pos->z)]) and $this->updateQueueIndex[$index] <= $delay){
+		if(
+			!$this->isInWorld($pos->x, $pos->y, $pos->z) or
+			isset($this->updateQueueIndex[$index = Level::blockHash($pos->x, $pos->y, $pos->z)]) and $this->updateQueueIndex[$index] <= $delay
+		){
 			return;
 		}
 		$this->updateQueueIndex[$index] = $delay;
 		$this->updateQueue->insert(new Vector3((int) $pos->x, (int) $pos->y, (int) $pos->z), (int) $delay + $this->server->getTick());
 	}
 
+	public function isInWorld(float $x, float $y, float $z) : bool{
+		return (
+			$x <= INT32_MAX and $x >= INT32_MIN and
+			$y < $this->getWorldHeight() and $y >= 0 and
+			$z <= INT32_MAX and $z >= INT32_MIN
+		);
+	}
+
+	public function getWorldHeight() : int{
+		return $this->provider->getWorldHeight();
+	}
 	/**
 	 * @param AxisAlignedBB $bb
 	 * @param bool          $targetFirst
