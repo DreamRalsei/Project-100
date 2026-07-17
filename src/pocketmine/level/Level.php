@@ -279,6 +279,10 @@ class Level implements ChunkManager, Metadatable{
 	/** @var Weather */
 	private $weather;
 
+	/** @var ReversePriorityQueue */
+	private $scheduledBlockUpdateQueue;
+	private $scheduledBlockUpdateQueueIndex = [];
+
 	private $blockTempData = [];
 
 	private $dimension = self::DIMENSION_NORMAL;
