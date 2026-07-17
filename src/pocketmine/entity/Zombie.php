@@ -232,7 +232,6 @@ class Zombie extends Monster{
 	}
 
 	public function getDrops(){
-		$lootingL = 0;
 		$cause = $this->lastDamageCause;
 		$drops = [];
 		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){

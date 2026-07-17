@@ -22,6 +22,7 @@
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
@@ -58,22 +59,18 @@ class Spider extends Monster{
 	}
 	
 	public function getDrops(){
-		$drops = array(ItemItem::get(ItemItem::STRING, 0, 1));
-		if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player) {
-			if (mt_rand(0, 199) < 5) {
-				switch (mt_rand(0, 2)) {
-					case 0:
-						$drops[] = ItemItem::get(ItemItem::IRON_INGOT, 0, 1);
-						break;
-					case 1:
-						$drops[] = ItemItem::get(ItemItem::CARROT, 0, 1);
-						break;
-					case 2:
-						$drops[] = ItemItem::get(ItemItem::POTATO, 0, 1);
-						break;
-				}
+		$cause = $this->lastDamageCause;
+		if($cause instanceof EntityDamageByEntityEvent){
+			$damager = $cause->getDamager();
+			if($damager instanceof Player){
+				$lootingL = $damager->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
+				$drops = [ItemItem::get(ItemItem::STRING, 0, mt_rand(0, 2 + $lootingL))];
+				$drops[] = ItemItem::get(ItemItem::SPIDER_EYE, 0, mt_rand(0, 2 + $lootingL));
+
+				return $drops;
 			}
 		}
-		return $drops;
+
+		return [];
 	}
 }

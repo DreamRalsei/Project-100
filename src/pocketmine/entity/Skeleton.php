@@ -22,6 +22,9 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\MobEquipmentPacket;
@@ -60,5 +63,21 @@ class Skeleton extends Monster implements ProjectileSource{
 		$pk->selectedSlot = 0;
 
 		$player->dataPacket($pk);
+	}
+
+	public function getDrops(){
+		$cause = $this->lastDamageCause;
+		if($cause instanceof EntityDamageByEntityEvent){
+			$damager = $cause->getDamager();
+			if($damager instanceof Player){
+				$lootingL = $damager->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
+				$drops = [ItemItem::get(ItemItem::ARROW, 0, mt_rand(0, 2 + $lootingL))];
+				$drops[] = ItemItem::get(ItemItem::BONE, 0, mt_rand(0, 2 + $lootingL));
+
+				return $drops;
+			}
+		}
+
+		return [];
 	}
 }
