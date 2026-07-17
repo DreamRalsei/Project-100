@@ -48,6 +48,7 @@ class Creeper extends Monster{
 	}
 
 	public function initEntity(){
+		$this->setMaxHealth(20);
 		parent::initEntity();
 
 		if(!isset($this->namedtag->powered)){

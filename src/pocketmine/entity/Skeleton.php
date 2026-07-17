@@ -38,6 +38,11 @@ class Skeleton extends Monster implements ProjectileSource{
 	public function getName() : string{
 		return "Skeleton";
 	}
+
+	public function initEntity(){
+		$this->setMaxHealth(20);
+		parent::initEntity();
+	}
 	
 	public function spawnTo(Player $player){
 		$pk = new AddEntityPacket();

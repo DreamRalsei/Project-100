@@ -213,6 +213,7 @@ abstract class Entity extends Location implements Metadatable{
 		Entity::registerEntity(Villager::class);
 		Entity::registerEntity(Witch::class);
 		Entity::registerEntity(Wither::class);
+		Entity::registerEntity(WitherSkeleton::class);
 		Entity::registerEntity(Wolf::class);
 		Entity::registerEntity(XPOrb::class);
 		Entity::registerEntity(Zombie::class);
