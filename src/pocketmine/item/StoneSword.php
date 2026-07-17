@@ -32,6 +32,6 @@ class StoneSword extends Tool{
 	}
 
 	public function getAttackDamage(){
-		return 5;
+		return 6;
 	}
 }

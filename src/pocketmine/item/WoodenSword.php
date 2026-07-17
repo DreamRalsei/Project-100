@@ -32,6 +32,6 @@ class WoodenSword extends Tool{
 	}
 
 	public function getAttackDamage(){
-		return 4;
+		return 5;
 	}
 }
