@@ -32,6 +32,6 @@ class IronSword extends Tool{
 	}
 
 	public function getAttackDamage(){
-		return 7;
+		return 6;
 	}
 }
