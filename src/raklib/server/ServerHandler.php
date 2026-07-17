@@ -130,10 +130,10 @@ class ServerHandler{
 				$reason = substr($packet, $offset, $len);
 				$this->instance->closeSession($identifier, $reason);
 			}elseif($id === RakLib::PACKET_PING){
-				$len = ord($packet{$offset++});
+				$len = ord($packet[$offset++]);
 				$identifier = substr($packet, $offset, $len);
 				$offset += $len;
-				$len = ord($packet{$offset++});
+				$len = ord($packet[$offset++]);
 				$ping = substr($packet, $offset, $len);
 				$this->instance->handlePing($identifier, $ping);
 			}elseif($id === RakLib::PACKET_INVALID_SESSION){
